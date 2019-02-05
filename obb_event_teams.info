@@ -4,3 +4,4 @@ core = 7.x
 
 dependencies[] = field_collection
 dependencies[] = ding_place2book
+dependencies[] = obb_event_teams_feature
