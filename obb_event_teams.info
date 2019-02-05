@@ -1,0 +1,6 @@
+name = obb event teams
+description = Håndterer events med flere hold eller tider.
+core = 7.x
+
+dependencies[] = field_collection
+dependencies[] = ding_place2book
