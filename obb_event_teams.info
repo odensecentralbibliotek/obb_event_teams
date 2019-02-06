@@ -1,5 +1,5 @@
-name = obb event teams
-description = Håndterer events med flere hold eller tider.
+name = obb ding event teams
+description = Håndterer ding events med flere hold eller tider.
 core = 7.x
 
 dependencies[] = field_collection
