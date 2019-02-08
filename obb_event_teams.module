@@ -28,7 +28,6 @@ function obb_event_teams_node_insert($node) {
         if ($node->place2book['maintain_copy'] == 1) {
             //check if parent has place2book ?!
             perform_p2b_op_on_inline_hold_tider($node);
-            
         }
     }
 }
@@ -179,8 +178,6 @@ function perform_p2b_op_on_inline_hold_tider($node,$delete = false,$user_targets
                ->fetchField();
             _place2book_db_op('delete', $copied_data, $place2book_id);
             
-       }
-       //drupal_write_record('node', $inline_hold_node, 'nid');
-        
+       }        
    }
 }
