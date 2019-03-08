@@ -65,16 +65,21 @@ function obb_event_teams_node_delete($node) {
 }
 function obb_event_teams_entity_delete($entity, $type)
 {
-    if($entity->hostEntity()->type == "ding_event" && $entity->field_name == "field_event_hold")
-    {
-        $delete_target = array($entity);
-        $node = $entity->hostEntity();
-        if(!isset($node->place2book))
+    try{
+        if($entity->hostEntity()->type == "ding_event" && $entity->field_name == "field_event_hold")
         {
-            $node->place2book = place2book_settings($node->nid); // not always loaded.
+            $delete_target = array($entity);
+            $node = $entity->hostEntity();
+            if(!isset($node->place2book))
+            {
+                $node->place2book = place2book_settings($node->nid); // not always loaded.
+            }
+            perform_p2b_op_on_inline_hold_tider($node,true,$delete_target);
         }
-        perform_p2b_op_on_inline_hold_tider($node,true,$delete_target);
+    } catch (Exception $ex) {
+        
     }
+    
 }
 function obb_event_teams_ding_place2book_pre_alter(&$node,$op = "insert")
 {
