@@ -1,6 +1,7 @@
 <?php
 function obb_event_teams_init() {
   drupal_add_js(drupal_get_path('module', 'obb_event_teams') . '/js/inline-place2book.js');
+  drupal_add_css(drupal_get_path('module', 'obb_event_teams') . '/css/obb_event_team_p2b.css');
 }
 /*
  * Alter p2b on our field collections
@@ -66,7 +67,7 @@ function obb_event_teams_node_delete($node) {
 function obb_event_teams_entity_delete($entity, $type)
 {
     try{
-        if($entity->hostEntity()->type == "ding_event" && $entity->field_name == "field_event_hold")
+        if(@$entity->hostEntity()->type == "ding_event" && $entity->field_name == "field_event_hold")
         {
             $delete_target = array($entity);
             $node = $entity->hostEntity();

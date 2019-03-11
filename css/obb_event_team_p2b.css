@@ -1,2 +1,12 @@
-
-
+.field-name-field-event-hold .btn-large
+{
+    float:right;
+}
+.field-name-field-hold-navn
+{
+    font-weight: bold;
+}
+.field-name-field-ding-event-date
+{
+    margin-bottom: 5px;
+}
