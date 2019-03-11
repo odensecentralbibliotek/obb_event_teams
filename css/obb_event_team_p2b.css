@@ -1,6 +1,7 @@
 .field-name-field-event-hold .btn-large
 {
     float:right;
+    font-size: 20px;
 }
 .field-name-field-hold-navn
 {
@@ -9,4 +10,8 @@
 .field-name-field-ding-event-date
 {
     margin-bottom: 5px;
+}
+.field-collection-view
+{
+    margin:0px !important;
 }
