@@ -232,3 +232,15 @@ function sort_team_view_results($a, $b)
     }
     return ($date < $date1) ? -1 : 1;
 }
+function obb_event_teams_node_view($node, $view_mode = 'full', $langcode = NULL) {
+    if( $node->type == "ding_event" && $view_mode == 'full' ){
+        //check if we have teams.
+        
+        //set date period to "multiple periods"
+        if(isset($node->field_event_hold) && sizeof($node->field_event_hold) != 0)
+        {
+            $node->content["field_ding_event_date"][0] = array('#markup' => "Flere perioder");
+        }
+        
+    }
+}
