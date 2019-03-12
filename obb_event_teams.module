@@ -222,6 +222,47 @@ function obb_event_teams_views_post_execute(&$view) {
         }
         uasort($view->result,'sort_team_view_results');
     }
+    if($view->name == "event_stat" && $view->current_display == "views_data_export_1")
+    {
+         foreach($view->result as $index => $result)
+        {
+            $node = node_load($result->nid); //can get heavy i guess..
+            if(isset($node->field_event_hold) && sizeof($node->field_event_hold) != 0)
+            {
+                foreach($node->field_event_hold['und'] as $team)
+                {
+                    //Add team to result
+                    $new_result = clone $result;
+                    $hold = entity_load_single('field_collection_item',$team['value']);
+                    $new_result->node_title .= " - " . $hold->field_hold_navn['und'][0]['value'];
+                    $new_result->nid .= ":" . $hold->item_id;
+                    foreach ($new_result as $key => $value) {
+                        
+                        if(strpos($key,'field_field_') !== false)
+                        {
+                            $hold_key = explode('field_field_',$key);
+                            //its a field..update the value
+                            if(isset($hold->{'field_'.$hold_key[1]}))
+                            {
+                                //unset($new_result->{"field_field_".$hold_key[1]});
+                                $field = field_get_items('field_collection_item', $hold, 'field_'.$hold_key[1],'und');
+                                $output = field_view_value('field_collection_item', $hold, 'field_'.$hold_key[1], $field,'full','und');
+
+                                $new_result->{"field_field_".$hold_key[1]}[0]['raw'] = $hold->{'field_'.$hold_key[1]};
+                                $new_result->{"field_field_".$hold_key[1]}[0]['rendered']['#markup'] = $field['0']['value'];
+                                
+                            }
+                        }
+                    }
+                    $view->result[] = $new_result;
+                    //remove old node
+                }
+                unset($view->result[$index]);
+            }
+        }
+        //sort it to match view results.
+        uasort($view->result,'sort_team_view_results');
+    }
 }
 function sort_team_view_results($a, $b)
 {
