@@ -16,7 +16,6 @@ dependencies[] = options
 dependencies[] = text
 dependencies[] = workflow
 dependencies[] = workflowfield
-features[Workflow][] = arrangement_efterbehandling
 features[conditional_fields][] = field_collection_item:field_event_hold
 features[ctools][] = field_group:field_group:1
 features[features_api][] = api:1
