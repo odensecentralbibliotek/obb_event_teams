@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * obb_event_teams_feature.features.user_permission.inc
+ * obb_event_team_standard_feature.features.user_permission.inc
  */
 
 /**
  * Implements hook_user_default_permissions().
  */
-function obb_event_teams_feature_user_default_permissions() {
+function obb_event_team_standard_feature_user_default_permissions() {
   $permissions = array();
 
   // Exported permission: create field_ding_sale_date.

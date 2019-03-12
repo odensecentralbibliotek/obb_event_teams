@@ -1,13 +1,13 @@
 <?php
 /**
  * @file
- * obb_event_teams_feature.features.conditional_fields.inc
+ * obb_event_team_event_stat_feature.features.conditional_fields.inc
  */
 
 /**
  * Implements hook_conditional_fields_default_fields().
  */
-function obb_event_teams_feature_conditional_fields_default_fields() {
+function obb_event_team_event_stat_feature_conditional_fields_default_fields() {
   $items = array();
 
   $items["field_collection_item:field_event_hold:0"] = array(
