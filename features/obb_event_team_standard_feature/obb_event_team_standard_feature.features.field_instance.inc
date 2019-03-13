@@ -73,6 +73,54 @@ function obb_event_team_standard_feature_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'field_collection_item-field_event_hold-field_ding_event_date'
+  $field_instances['field_collection_item-field_event_hold-field_ding_event_date'] = array(
+    'bundle' => 'field_event_hold',
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'module' => 'date',
+        'settings' => array(
+          'format_type' => 'medium',
+          'fromto' => 'both',
+          'multiple_from' => '',
+          'multiple_number' => '',
+          'multiple_to' => '',
+        ),
+        'type' => 'date_default',
+        'weight' => 1,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_ding_event_date',
+    'label' => 'Hold start/slut',
+    'required' => 1,
+    'settings' => array(
+      'default_value' => 'now',
+      'default_value2' => 'same',
+      'default_value_code' => '',
+      'default_value_code2' => '',
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'date',
+      'settings' => array(
+        'display_all_day' => 0,
+        'increment' => 15,
+        'input_format' => 'm/d/Y - H:i:s',
+        'input_format_custom' => '',
+        'label_position' => 'above',
+        'text_parts' => array(),
+        'year_range' => '-3:+3',
+      ),
+      'type' => 'date_select',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'field_collection_item-field_event_hold-field_ding_event_library'
   $field_instances['field_collection_item-field_event_hold-field_ding_event_library'] = array(
     'bundle' => 'field_event_hold',
@@ -479,6 +527,7 @@ function obb_event_team_standard_feature_field_default_field_instances() {
   t('Category');
   t('Event kapacitet ');
   t('Hold navn');
+  t('Hold start/slut');
   t('Hvis intent er valgt her , bliver den salgs periode fra det originale arrangement brugt.');
   t('Library');
   t('List image');
