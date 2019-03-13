@@ -67,7 +67,7 @@ function obb_event_teams_node_delete($node) {
 function obb_event_teams_entity_delete($entity, $type)
 {
     try{
-        if(@$entity->hostEntity()->type == "ding_event" && $entity->field_name == "field_event_hold")
+        if(method_exists($entity,"hostEntity") && $entity->hostEntity()->type == "ding_event" && $entity->field_name == "field_event_hold")
         {
             $delete_target = array($entity);
             $node = $entity->hostEntity();
