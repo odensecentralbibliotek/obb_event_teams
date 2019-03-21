@@ -42,7 +42,7 @@ function obb_event_teams_node_update($node) {
         {
             $node->place2book = place2book_settings($node->nid); // not always loaded.
         }
-        if ($node->place2book['maintain_copy'] == 1) {
+        if (isset($node->place2book['maintain_copy']) && $node->place2book['maintain_copy'] == 1) {
             //check if parent has place2book ?!
             perform_p2b_op_on_inline_hold_tider($node);
         }
@@ -111,11 +111,14 @@ function perform_p2b_op_on_inline_hold_tider($node,$delete = false,$user_targets
    $inline_hold_tider = array();
    if($user_targets == null)
    {
-    foreach($node->field_event_hold['und'] as $index => $field_collection_item)
-    {
-        $hold = entity_load_single('field_collection_item',$field_collection_item['value']);
-        array_push($inline_hold_tider,$hold);
-    }
+       if(isset($node->field_event_hold['und']))
+       {
+            foreach($node->field_event_hold['und'] as $index => $field_collection_item)
+            {
+                $hold = entity_load_single('field_collection_item',$field_collection_item['value']);
+                array_push($inline_hold_tider,$hold);
+            }
+       }
    }
    else
    {
