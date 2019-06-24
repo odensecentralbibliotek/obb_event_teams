@@ -215,16 +215,34 @@ function obb_event_teams_views_post_execute(&$view) {
                     if(team_end_date >= $date)
                     {
                         //set the main node to the new team dates.
-                        $view->result[$index]->field_field_ding_event_date[0]['raw']['value'] = $hold->field_ding_event_date['und'][0]['value'];
-                        if(isset($view->result[$index]->field_field_ding_event_date['und'][0]['value2']) && isset($hold->field_ding_event_date['und'][0]['value2']))
+                        if($view->current_display == "panel_pane_1")
                         {
-                            $view->result[$index]->field_field_ding_event_date[0]['raw']['value2'] = $hold->field_ding_event_date['und'][0]['value2'];
+                            $view->result[$index]->field_field_ding_event_date_1[0]['raw']['value'] = $hold->field_ding_event_date['und'][0]['value'];
+                            if(isset($view->result[$index]->field_field_ding_event_date_1['und'][0]['value2']) && isset($hold->field_ding_event_date['und'][0]['value2']))
+                            {
+                                $view->result[$index]->field_field_ding_event_date_1[0]['raw']['value2'] = $hold->field_ding_event_date['und'][0]['value2'];
+                            }
+                            else
+                            {
+                                unset($view->result[$index]->field_field_ding_event_date_1[0]['raw']['value2']);
+                            }
+                            $view->result[$index]->field_field_ding_event_date_1[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
                         }
                         else
                         {
-                            unset($view->result[$index]->field_field_ding_event_date[0]['raw']['value2']);
+                            $view->result[$index]->field_field_ding_event_date[0]['raw']['value'] = $hold->field_ding_event_date['und'][0]['value'];
+                            if(isset($view->result[$index]->field_field_ding_event_date['und'][0]['value2']) && isset($hold->field_ding_event_date['und'][0]['value2']))
+                            {
+                                $view->result[$index]->field_field_ding_event_date[0]['raw']['value2'] = $hold->field_ding_event_date['und'][0]['value2'];
+                            }
+                            else
+                            {
+                                unset($view->result[$index]->field_field_ding_event_date[0]['raw']['value2']);
+                            }
+                            $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
                         }
-                         $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
+                        
+                         
                     }
                     
                 }
@@ -276,8 +294,19 @@ function obb_event_teams_views_post_execute(&$view) {
 }
 function sort_team_view_results($a, $b)
 {
-    $date = date('Y-m-d H:i:s', strtotime($a->field_field_ding_event_date[0]['raw']['value']));
-    $date1 = date('Y-m-d H:i:s', strtotime($b->field_field_ding_event_date[0]['raw']['value']));
+    $date = null;
+    $date1 = null;
+    if(isset($a->field_field_ding_event_date) && isset($b->field_field_ding_event_date))
+    {
+        $date = date('Y-m-d H:i:s', strtotime($a->field_field_ding_event_date[0]['raw']['value']));
+        $date1 = date('Y-m-d H:i:s', strtotime($b->field_field_ding_event_date[0]['raw']['value']));
+    }
+    else
+    {
+        $date = date('Y-m-d H:i:s', strtotime($a->field_field_ding_event_date_1[0]['raw']['value']));
+        $date1 = date('Y-m-d H:i:s', strtotime($b->field_field_ding_event_date_1[0]['raw']['value']));
+    }
+   
     if ($date == $date1) {
         return 0;
     }
