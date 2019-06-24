@@ -226,7 +226,7 @@ function obb_event_teams_views_post_execute(&$view) {
                             {
                                 unset($view->result[$index]->field_field_ding_event_date_1[0]['raw']['value2']);
                             }
-                            $view->result[$index]->field_field_ding_event_date_1[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
+                            $view->result[$index]->field_field_ding_event_date_1[0]['rendered']['#markup'] = "<div>".$team_date."</div>";
                         }
                         else
                         {
@@ -239,7 +239,7 @@ function obb_event_teams_views_post_execute(&$view) {
                             {
                                 unset($view->result[$index]->field_field_ding_event_date[0]['raw']['value2']);
                             }
-                            $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
+                            $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>".$team_date."</div>";
                         }
                         
                          break;
