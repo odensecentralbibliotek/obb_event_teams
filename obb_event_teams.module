@@ -210,10 +210,10 @@ function obb_event_teams_views_post_execute(&$view) {
                     $hold = entity_load_single('field_collection_item',$team['value']);
                     $date = date("d-m-Y"); //get current date.
                     $team_date = !isset($hold->field_ding_event_date['und'][0]['value2']) ? $hold->field_ding_event_date['und'][0]['value'] : $hold->field_ding_event_date['und'][0]['value2'];
-                    $team_end_date = date('d/m/Y', strtotime($team_date));
+                    $team_end_date = date('d-m-Y', strtotime($team_date));
                    
                     $time1 = strtotime($date);
-                    $time2 = strtotime($team_date);
+                    $time2 = strtotime($team_end_date);
                     
                     if($time2 >= $time1)
                     {
