@@ -208,11 +208,14 @@ function obb_event_teams_views_post_execute(&$view) {
                 {
                     //find first team that is not over.
                     $hold = entity_load_single('field_collection_item',$team['value']);
-                    $date = date("d/m/Y"); //get current date.
+                    $date = date("d-m-Y"); //get current date.
                     $team_date = !isset($hold->field_ding_event_date['und'][0]['value2']) ? $hold->field_ding_event_date['und'][0]['value'] : $hold->field_ding_event_date['und'][0]['value2'];
                     $team_end_date = date('d/m/Y', strtotime($team_date));
                    
-                    if($team_end_date >= $date)
+                    $time1 = strtotime($date);
+                    $time2 = strtotime($team_date);
+                    
+                    if($time2 >= $time1)
                     {
                         //set the main node to the new team dates.
                         if($view->current_display == "panel_pane_1")
@@ -226,7 +229,7 @@ function obb_event_teams_views_post_execute(&$view) {
                             {
                                 unset($view->result[$index]->field_field_ding_event_date_1[0]['raw']['value2']);
                             }
-                            $view->result[$index]->field_field_ding_event_date_1[0]['rendered']['#markup'] = "<div>".$team_date."</div>";
+                            $view->result[$index]->field_field_ding_event_date_1[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
                         }
                         else
                         {
@@ -239,7 +242,7 @@ function obb_event_teams_views_post_execute(&$view) {
                             {
                                 unset($view->result[$index]->field_field_ding_event_date[0]['raw']['value2']);
                             }
-                            $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>".$team_date."</div>";
+                            $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
                         }
                         
                          break;
