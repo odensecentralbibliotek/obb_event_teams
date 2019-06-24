@@ -242,7 +242,7 @@ function obb_event_teams_views_post_execute(&$view) {
                             $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
                         }
                         
-                         
+                         break;
                     }
                     
                 }
