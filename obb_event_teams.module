@@ -212,7 +212,7 @@ function obb_event_teams_views_post_execute(&$view) {
                     $team_date = !isset($hold->field_ding_event_date['und'][0]['value2']) ? $hold->field_ding_event_date['und'][0]['value'] : $hold->field_ding_event_date['und'][0]['value2'];
                     $team_end_date = date('d/m/Y', strtotime($team_date));
                    
-                    if(team_end_date >= $date)
+                    if($team_end_date >= $date)
                     {
                         //set the main node to the new team dates.
                         if($view->current_display == "panel_pane_1")
@@ -296,7 +296,7 @@ function sort_team_view_results($a, $b)
 {
     $date = null;
     $date1 = null;
-    if(isset($a->field_field_ding_event_date) && isset($b->field_field_ding_event_date))
+    if(property_exists($a,'field_field_ding_event_date') && property_exists($b,'field_field_ding_event_date'))
     {
         $date = date('Y-m-d H:i:s', strtotime($a->field_field_ding_event_date[0]['raw']['value']));
         $date1 = date('Y-m-d H:i:s', strtotime($b->field_field_ding_event_date[0]['raw']['value']));
