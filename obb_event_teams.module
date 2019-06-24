@@ -197,7 +197,7 @@ function perform_p2b_op_on_inline_hold_tider($node,$delete = false,$user_targets
    }
 }
 function obb_event_teams_views_post_execute(&$view) {
-    if($view->name == "ding_event" && $view->current_display == "ding_event_floated_list")
+    if($view->name == "ding_event" && ($view->current_display == "ding_event_floated_list" || $view->current_display == "panel_pane_1"))
     {
         foreach($view->result as $index => $result)
         {
