@@ -197,7 +197,7 @@ function perform_p2b_op_on_inline_hold_tider($node,$delete = false,$user_targets
    }
 }
 function obb_event_teams_views_post_execute(&$view) {
-    if($view->name == "ding_event" && $view->current_display == "ding_event_floated_list")
+    if($view->name == "ding_event" && ($view->current_display == "ding_event_floated_list" || $view->current_display == "panel_pane_1"))
     {
         foreach($view->result as $index => $result)
         {
@@ -208,23 +208,44 @@ function obb_event_teams_views_post_execute(&$view) {
                 {
                     //find first team that is not over.
                     $hold = entity_load_single('field_collection_item',$team['value']);
-                    $date = date("d/m/Y"); //get current date.
+                    $date = date("d-m-Y"); //get current date.
                     $team_date = !isset($hold->field_ding_event_date['und'][0]['value2']) ? $hold->field_ding_event_date['und'][0]['value'] : $hold->field_ding_event_date['und'][0]['value2'];
-                    $team_end_date = date('d/m/Y', strtotime($team_date));
+                    $team_end_date = date('d-m-Y', strtotime($team_date));
                    
-                    if(team_end_date >= $date)
+                    $time1 = strtotime($date);
+                    $time2 = strtotime($team_end_date);
+                    
+                    if($time2 >= $time1)
                     {
                         //set the main node to the new team dates.
-                        $view->result[$index]->field_field_ding_event_date[0]['raw']['value'] = $hold->field_ding_event_date['und'][0]['value'];
-                        if(isset($view->result[$index]->field_field_ding_event_date['und'][0]['value2']) && isset($hold->field_ding_event_date['und'][0]['value2']))
+                        if($view->current_display == "panel_pane_1")
                         {
-                            $view->result[$index]->field_field_ding_event_date[0]['raw']['value2'] = $hold->field_ding_event_date['und'][0]['value2'];
+                            $view->result[$index]->field_field_ding_event_date_1[0]['raw']['value'] = $hold->field_ding_event_date['und'][0]['value'];
+                            if(isset($view->result[$index]->field_field_ding_event_date_1['und'][0]['value2']) && isset($hold->field_ding_event_date['und'][0]['value2']))
+                            {
+                                $view->result[$index]->field_field_ding_event_date_1[0]['raw']['value2'] = $hold->field_ding_event_date['und'][0]['value2'];
+                            }
+                            else
+                            {
+                                unset($view->result[$index]->field_field_ding_event_date_1[0]['raw']['value2']);
+                            }
+                            $view->result[$index]->field_field_ding_event_date_1[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
                         }
                         else
                         {
-                            unset($view->result[$index]->field_field_ding_event_date[0]['raw']['value2']);
+                            $view->result[$index]->field_field_ding_event_date[0]['raw']['value'] = $hold->field_ding_event_date['und'][0]['value'];
+                            if(isset($view->result[$index]->field_field_ding_event_date['und'][0]['value2']) && isset($hold->field_ding_event_date['und'][0]['value2']))
+                            {
+                                $view->result[$index]->field_field_ding_event_date[0]['raw']['value2'] = $hold->field_ding_event_date['und'][0]['value2'];
+                            }
+                            else
+                            {
+                                unset($view->result[$index]->field_field_ding_event_date[0]['raw']['value2']);
+                            }
+                            $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
                         }
-                         $view->result[$index]->field_field_ding_event_date[0]['rendered']['#markup'] = "<div>Flere tidspunkter</div>";
+                        
+                         break;
                     }
                     
                 }
@@ -276,8 +297,19 @@ function obb_event_teams_views_post_execute(&$view) {
 }
 function sort_team_view_results($a, $b)
 {
-    $date = date('Y-m-d H:i:s', strtotime($a->field_field_ding_event_date[0]['raw']['value']));
-    $date1 = date('Y-m-d H:i:s', strtotime($b->field_field_ding_event_date[0]['raw']['value']));
+    $date = null;
+    $date1 = null;
+    if(property_exists($a,'field_field_ding_event_date') && property_exists($b,'field_field_ding_event_date'))
+    {
+        $date = date('Y-m-d H:i:s', strtotime($a->field_field_ding_event_date[0]['raw']['value']));
+        $date1 = date('Y-m-d H:i:s', strtotime($b->field_field_ding_event_date[0]['raw']['value']));
+    }
+    else
+    {
+        $date = date('Y-m-d H:i:s', strtotime($a->field_field_ding_event_date_1[0]['raw']['value']));
+        $date1 = date('Y-m-d H:i:s', strtotime($b->field_field_ding_event_date_1[0]['raw']['value']));
+    }
+   
     if ($date == $date1) {
         return 0;
     }
