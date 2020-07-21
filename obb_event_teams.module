@@ -347,6 +347,6 @@ function obb_event_teams_clone_node_alter(&$node,$context)
     if($node->type == "ding_event")
     {
         //fixup a setting.
-        unset($node->field_event_hold);
+        unset($node->field_event_hold['und']);
     }
 }
