@@ -331,7 +331,7 @@ function obb_event_teams_preprocess_node(&$variables) {
         
     }
 }
-function obb_event_teams_clone_node_alter($node,$context)
+function obb_event_teams_clone_node_alter(&$node,$context)
 {
     if($node->type == "ding_event")
     {
