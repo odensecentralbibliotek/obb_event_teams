@@ -43,7 +43,9 @@ function obb_event_teams_node_update($node) {
             $node->place2book = place2book_settings($node->nid); // not always loaded.
         }
         if (isset($node->place2book['maintain_copy']) && $node->place2book['maintain_copy'] == 1) {
-            //check if parent has place2book ?!
+            //if parent has a premade old ticketid..delete it from place2book.
+            // this happens if a users saves the node before addding teams..
+            
             perform_p2b_op_on_inline_hold_tider($node);
         }
         else if(isset($node->place2book) || $node->place2book['maintain_copy'] == 0)
@@ -111,8 +113,13 @@ function perform_p2b_op_on_inline_hold_tider($node,$delete = false,$user_targets
    $inline_hold_tider = array();
    if($user_targets == null)
    {
-       if(isset($node->field_event_hold['und']))
+       if(isset($node->field_event_hold['und']) && sizeof($node->field_event_hold['und']) != 0 )
        {
+        $nsettings = place2book_settings($node->nid);
+        if(isset($nsettings['place2book_id']) && !empty($nsettings['place2book_id'] && $nsettings['place2book_id'] != "-1"))
+        {
+            place2book_event_op('delete',$node,$nsettings['place2book_id']);
+        }
             foreach($node->field_event_hold['und'] as $index => $field_collection_item)
             {
                 $hold = entity_load_single('field_collection_item',$field_collection_item['value']);
@@ -132,6 +139,10 @@ function perform_p2b_op_on_inline_hold_tider($node,$delete = false,$user_targets
        if(isset($inline_hold_node->field_capacity) && sizeof($inline_hold_node->field_capacity) == 0)
        {
         $copied_data->capacity = isset($node->capacity) ? $node->capacity : $node->place2book['capacity'];
+        if($copied_data->capacity == null)
+        {
+            $copied_data->capacity = 0;
+        }
        }
        else
        {
